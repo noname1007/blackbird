@@ -4,6 +4,8 @@
 
 > Blackbird is a robust OSINT tool that facilitates rapid searches for user accounts by username or email across a wide array of platforms, enhancing digital investigations. It features WhatsMyName integration, export options in PDF, CSV, and HTTP response formats, and customizable search filters.
 
+[![SherlockEyeCover](./docs/.gitbook/assets/sherlockeye_cover.jpg)](https://sherlockeye.io/)
+
 ### Setup
 
 **Clone the repository**
@@ -39,6 +41,12 @@ python blackbird.py --email email1@email.com email2@email.com email3@email.com
 python blackbird.py --email email1@email.com --pdf
 ```
 
+##  ✨ AI
+Blackbird uses AI-powered NER models to improve metadata extraction, identifying key entities for faster and more accurate insights.
+```bash
+python blackbird.py --username username1 --ai
+```
+
 ## More
 For more details about the project, visit the <a href="https://p1ngul1n0.gitbook.io/blackbird/">Docs</a>
 
@@ -52,12 +60,16 @@ Blackbird is fully integrated with [WhatsMyName](https://github.com/WebBreacher/
 
 ### Sponsors
 
+
+
 <p align="center">
+  
+  [![DigitalOcean Referral Badge](https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%203.svg)](https://www.digitalocean.com/?refcode=eae02be1dd10&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
+  
   <a href="https://site.cyberhunteracademy.com/">
     <img alt="Cyber Hunter Lab" width="150" src="https://raw.githubusercontent.com/p1ngul1n0/src/master/logo_chl.jpg" />
   </a>
 </p>
-
 
 ### Disclaimer
 

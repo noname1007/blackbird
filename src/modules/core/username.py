@@ -8,13 +8,14 @@ sys.path.append(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "src"))
 )
 
-from src.modules.whatsmyname.list_operations import readList
-from src.modules.utils.parse import extractMetadata, remove_duplicates
-from src.modules.utils.filter import filterFoundAccounts, applyFilters
-from src.modules.utils.http_client import do_async_request
-from src.modules.utils.log import logError
-from src.modules.export.dump import dumpContent
-from src.modules.sites.instagram import get_instagram_account_info
+from ..whatsmyname.list_operations import readList
+from ..utils.parse import extractMetadata, remove_duplicates
+from ..utils.filter import filterFoundAccounts, applyFilters
+from ..utils.http_client import do_async_request
+from ..utils.log import logError
+from ..export.dump import dumpContent
+from ..sites.instagram import get_instagram_account_info
+from ..ner.entity_extraction import extract_data_with_ai
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -63,6 +64,12 @@ async def checkSite(
                                 response,
                                 site["name"],
                                 config,
+                            )
+                            extractedMetadata.extend(metadata)
+
+                        if config.ai and config.aiModel:
+                            metadata = extract_data_with_ai(
+                                config, site, response["content"], response["json"]
                             )
                             extractedMetadata.extend(metadata)
 
@@ -126,11 +133,14 @@ async def fetchResults(username, config):
 
 
 # Start username check and presents results to user
-def verifyUsername(username, config):
+def verifyUsername(username, config, sitesToSearch=None, metadata_params=None):
+    if sitesToSearch is None or metadata_params is None:
+        data = readList("username", config)
+        sitesToSearch = data["sites"]
+        config.metadata_params = readList("metadata", config)
+    else:
+        config.metadata_params = metadata_params
 
-    data = readList("username", config)
-    config.metadata_params = readList("metadata", config)
-    sitesToSearch = data["sites"]
     config.username_sites = applyFilters(sitesToSearch, config)
 
     config.console.print(
